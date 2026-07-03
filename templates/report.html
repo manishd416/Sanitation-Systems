@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Report Sanitation Issue</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Sanitation Management and Community Awareness Portal</h1>
+
+<nav>
+<a href="/">Home</a>
+<a href="/about">About</a>
+<a href="/report">Report Issue</a>
+<a href="/awareness">Awareness</a>
+<a href="/contact">Contact</a>
+</nav>
+
+</header>
+
+<div class="container">
+
+<h2>📝 Report a Sanitation Issue</h2>
+
+<p>
+Help us maintain a clean and healthy community by reporting sanitation-related
+problems. Your complaint will be stored securely and reviewed by the concerned
+authority.
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+
+<div class="row">
+
+<div class="col">
+
+<label>Full Name</label>
+
+<input type="text"
+name="name"
+placeholder="Enter your full name"
+required>
+
+</div>
+
+<div class="col">
+
+<label>Mobile Number</label>
+
+<input type="tel"
+name="mobile"
+placeholder="Enter mobile number"
+required>
+
+</div>
+
+</div>
+
+<label>Location of Issue</label>
+
+<input type="text"
+name="location"
+placeholder="Street / Area / Landmark"
+required>
+
+<label>Complaint Category</label>
+
+<select name="category">
+
+<option>Garbage Accumulation</option>
+
+<option>Blocked Drain</option>
+
+<option>Overflowing Dustbin</option>
+
+<option>Open Sewage</option>
+
+<option>Water Stagnation</option>
+
+<option>Other</option>
+
+</select>
+
+<label>Complaint Description</label>
+
+<textarea
+name="complaint"
+rows="5"
+placeholder="Describe the sanitation issue in detail..."
+required>
+</textarea>
+
+<label>Upload Photo (Optional)</label>
+
+<input
+type="file"
+name="image"
+accept="image/*">
+
+<button type="submit">
+
+Submit Complaint
+
+</button>
+
+</form>
+
+<hr>
+
+<h3>Important Note</h3>
+
+<p>
+
+✔ Provide the correct location for faster resolution.
+
+<br>
+
+✔ Uploading a photo helps identify the issue more easily.
+
+<br>
+
+✔ Your personal details will remain confidential.
+
+</p>
+
+</div>
+
+<footer>
+
+<p>
+
+Sanitation Management and Community Awareness Portal
+
+<br>
+
+Community Service Project | CSE (AI & ML)
+
+</p>
+
+</footer>
+
+</body>
+
+</html>
