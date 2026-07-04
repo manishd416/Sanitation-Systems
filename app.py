@@ -27,6 +27,9 @@ def awareness():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+@app.route("/hazards")
+def hazards():
+    return render_template("hazards.html")
 
 @app.route("/report", methods=["GET", "POST"])
 def report():
