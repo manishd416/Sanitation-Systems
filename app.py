@@ -12,70 +12,65 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-
 @app.route("/awareness")
 def awareness():
     return render_template("awareness.html")
-
 
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
-
 @app.route("/report", methods=["GET", "POST"])
 def report():
-
     if request.method == "POST":
-
         name = request.form["name"]
         mobile = request.form["mobile"]
         location = request.form["location"]
         complaint = request.form["complaint"]
-
-        image = request.files["image"]
+        image = request.files.get("image")
 
         filename = ""
-
-        if image:
+        if image and image.filename != "":
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
         conn = sqlite3.connect("database.db")
         cur = conn.cursor()
+        
+        # Ensure table exists (Good practice to include if database.db is fresh)
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS complaints (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT, mobile TEXT, location TEXT, 
+            complaint TEXT, image TEXT, date TEXT, status TEXT
+        )
+        """)
 
         cur.execute("""
         INSERT INTO complaints
-        (name,mobile,location,complaint,image,date,status)
+        (name, mobile, location, complaint, image, date, status)
         VALUES (?,?,?,?,?,?,?)
         """,
         (
-            name,
-            mobile,
-            location,
-            complaint,
-            filename,
-            datetime.now().strftime("%d-%m-%Y"),
-            "Pending"
+            name, mobile, location, complaint, filename,
+            datetime.now().strftime("%d-%m-%Y"), "Pending"
         ))
 
         conn.commit()
         conn.close()
 
-        return render_template("success.html", name=name)
+        # Fixed: Passing location and complaint to match success.html
+        return render_template("success.html", name=name, location=location, issue=complaint)
 
     return render_template("report.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
